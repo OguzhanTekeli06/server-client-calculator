@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesap Makinesi</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <h1>Hesap Makinesi</h1>
+    <form id="calculator-form">
+        <label for="num1">Birinci Sayı:</label>
+        <input type="text" id="num1" name="num1" required>
+        <br>
+        <label for="num2">İkinci Sayı:</label>
+        <input type="text" id="num2" name="num2" required>
+        <br>
+        <label for="operation">İşlem:</label>
+        <select id="operation" name="operation">
+            <option value="add">Topla</option>
+            <option value="subtract">Çıkar</option>
+            <option value="multiply">Çarp</option>
+            <option value="divide">Böl</option>
+        </select>
+        <br>
+        <button type="submit">Hesapla</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('calculator-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const num1 = document.getElementById('num1').value;
+            const num2 = document.getElementById('num2').value;
+            const operation = document.getElementById('operation').value;
+
+            fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ num1: num1, num2: num2, operation: operation })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('result').textContent = 'Hata: ' + data.error;
+                } else {
+                    document.getElementById('result').textContent = 'Sonuç: ' + data.result;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

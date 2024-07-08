@@ -1,11 +1,15 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
-app = Flask(__name__) # Flask uygulaması oluşturuyorum
+app = Flask(__name__)
 
-@app.route('/calculate', methods=['POST'])  # Calculate endpointi için POST isteklerini dinleyen fonksiyon
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/calculate', methods=['POST'])
 def calculate():
-    data = request.get_json()   # istekten Json verisi alınıyor
-    operation = data.get('operation')  # Bu Jsondan gerekli bilgileri çekiyorum
+    data = request.get_json()
+    operation = data.get('operation')
     num1 = data.get('num1')
     num2 = data.get('num2')
 
@@ -31,8 +35,8 @@ def calculate():
     else:
         return jsonify({'error': 'Invalid operation'}), 400
 
-    return jsonify({'result': result})     # Sonucu JSON formatında döndürüyoruz
+    return jsonify({'result': result})
 
-if __name__ == '__main__':               # # Uygulamayı ana modül olarak çalıştırdığımızda Flask sunucusunu başlatıyoruz
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 
