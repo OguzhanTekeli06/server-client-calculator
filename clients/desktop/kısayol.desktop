@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Hesap Makinesi
+Comment=Launches the calculator application
+Exec=/home/oguzhan/calculator/clients/desktop/baslat.sh
+Icon=/home/oguzhan/calculator/clients/public/img.png
+Terminal=false
+Type=Application
+
